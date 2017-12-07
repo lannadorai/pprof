@@ -27,6 +27,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -314,6 +315,28 @@ func TestFetchWithBase(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestConvertPerfData(t *testing.T) {
+	pathEnvVariable := os.Getenv("PATH")
+	currentPath := os.Getenv("PWD")
+	os.Setenv("PATH", pathEnvVariable+":"+path.Join(currentPath, "/third_party/perf_data_converter"))
+
+	perfDataFile := "testdata/perf.data"
+	ui := &proftest.TestUI{T: t}
+
+	f, err := convertPerfData(perfDataFile, ui)
+
+	if err != nil {
+		t.Errorf("cannot generate profile from %s: %v", perfDataFile, err)
+	}
+
+	defer f.Close()
+	_, err = profile.Parse(f)
+
+	if err != nil {
+		t.Errorf("cannot parse the profile generated from %s: %v", perfDataFile, err)
 	}
 }
 

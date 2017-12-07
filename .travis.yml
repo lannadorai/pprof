@@ -1,5 +1,7 @@
 language: go
 
+sudo: required
+
 go_import_path: github.com/google/pprof
 
 env: SKIP_GRAPHVIZ=0
@@ -47,15 +49,33 @@ matrix:
 
 addons:
   apt:
+    sources:
+      - ppa:ubuntu-toolchain-r/test -y
     packages:
       - graphviz
-      
+      - libelf-dev
+      - libssl-dev
+      - libcap-dev
+      - linux-tools-`uname -r`
+      - linux-cloud-tools-`uname -r`
+      - g++-4.8
+
 before_install:
   - go get -u github.com/golang/lint/golint honnef.co/go/tools/cmd/...   
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew update          ; fi
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew install graphviz; fi
 
+install:
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
+
+compiler:
+  - clang
+  - gcc
+
 script:
+  - make perf_to_profile -C third_party/perf_data_converter
+  - rm -rf third_party/perf_data_converter/third_party/*
   - gofmtdiff=$(gofmt -s -d .) && if [ -n "$gofmtdiff" ]; then printf 'gofmt -s found:\n%s\n' "$gofmtdiff" && exit 1; fi
   - golintlint=$(golint ./...) && if [ -n "$golintlint" ]; then printf 'golint found:\n%s\n' "$golintlint" && exit 1; fi
   - go tool vet -all .
