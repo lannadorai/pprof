@@ -327,7 +327,7 @@ func TestConvertPerfData(t *testing.T) {
 
 	os.Setenv("PATH", pathEnvVariable+":"+path.Join(currentPath, "/third_party/perf_data_converter"))
 
-	fmt.Println("New PATH: ", os.Setenv("PATH"))
+	fmt.Println("New PATH: ", os.Getenv("PATH"))
 
 	perfDataFile := "testdata/perf.data"
 	ui := &proftest.TestUI{T: t}
