@@ -321,7 +321,13 @@ func TestFetchWithBase(t *testing.T) {
 func TestConvertPerfData(t *testing.T) {
 	pathEnvVariable := os.Getenv("PATH")
 	currentPath := os.Getenv("PWD")
+	fmt.Println("Current Path: ", currentPath)
+	fmt.Println("PATH: ", pathEnvVariable)
+	fmt.Println("perf_to_profile path: ", path.Join(currentPath, "/third_party/perf_data_converter"))
+
 	os.Setenv("PATH", pathEnvVariable+":"+path.Join(currentPath, "/third_party/perf_data_converter"))
+
+	fmt.Println("New PATH: ", os.Setenv("PATH"))
 
 	perfDataFile := "testdata/perf.data"
 	ui := &proftest.TestUI{T: t}
