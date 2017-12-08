@@ -61,7 +61,7 @@ addons:
       - g++-4.8
 
 before_install:
-  - go get -u github.com/golang/lint/golint honnef.co/go/tools/cmd/...   
+  - go get -u github.com/golang/lint/golint honnef.co/go/tools/cmd/...
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew update          ; fi
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew install graphviz; fi
 
@@ -75,7 +75,7 @@ compiler:
 
 script:
   - make perf_to_profile -C third_party/perf_data_converter
-  - rm -rf third_party/perf_data_converter/third_party/*
+  - cp third_party/perf_data_converter/perf_to_profile third_party/. && rm -rf third_party/perf_data_converter/* && mv third_party/perf_to_profile third_party/perf_data_converter/
   - gofmtdiff=$(gofmt -s -d .) && if [ -n "$gofmtdiff" ]; then printf 'gofmt -s found:\n%s\n' "$gofmtdiff" && exit 1; fi
   - golintlint=$(golint ./...) && if [ -n "$golintlint" ]; then printf 'golint found:\n%s\n' "$golintlint" && exit 1; fi
   - go tool vet -all .
