@@ -7,9 +7,13 @@ echo "mode: $MODE" > coverage.txt
 
 # All packages.
 PKG=$(go list ./...)
-
 staticcheck $PKG
 unused $PKG
+
+# Fetch and build perf_data_converter
+git clone --recursive git://github.com/google/perf_data_converter third_party/perf_data_converter
+make perf_to_profile -C third_party/perf_data_converter
+cp third_party/perf_data_converter/perf_to_profile third_party/. && rm -rf third_party/perf_data_converter/* && mv third_party/perf_to_profile third_party/perf_data_converter/
 
 # Packages that have any tests.
 PKG=$(go list -f '{{if .TestGoFiles}} {{.ImportPath}} {{end}}' ./...)
