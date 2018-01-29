@@ -10,42 +10,92 @@ matrix:
   include:
     - os: linux
       go: 1.7.x
+      addons:
+	apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.8
+      env:
+         - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
       go: 1.8.x
+      addons:
+	apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.8
+      env:
+         - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
       go: 1.9.x
+      addons:
+	apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.8
+      env:
+         - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
       go: master
+      addons:
+	apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.8
+      env:
+         - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode6.4
       go: 1.8.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
       env: SKIP_GRAPHVIZ=1
     - os: osx
       osx_image: xcode6.4
       go: 1.9.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
       env: SKIP_GRAPHVIZ=1
     - os: osx
       osx_image: xcode6.4
       go: master
-      env: SKIP_GRAPHVIZ=1
+      env:
+	- SKIP_GRAPHVIZ=1
+	- MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode7.3
       go: 1.8.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode7.3
       go: 1.9.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode7.3
       go: master
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode8.3
       go: 1.8.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode8.3
       go: 1.9.x
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode8.3
       go: master
+      env:
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
 
 addons:
   apt:
@@ -58,16 +108,11 @@ addons:
       - libcap-dev
       - linux-tools-`uname -r`
       - linux-cloud-tools-`uname -r`
-      - g++-4.8
 
 before_install:
   - go get -u github.com/golang/lint/golint honnef.co/go/tools/cmd/... github.com/ianlancetaylor/demangle
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew update          ; fi
   - if (("$TRAVIS_OS_NAME" == "osx") && (!"$SKIP_GRAPHVIZ")); then brew install graphviz; fi
-
-install:
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
-  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
 
 compiler:
   - clang
