@@ -11,7 +11,7 @@ matrix:
     - os: linux
       go: 1.7.x
       addons:
-	apt:
+        apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
@@ -21,7 +21,7 @@ matrix:
     - os: linux
       go: 1.8.x
       addons:
-	apt:
+        apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
@@ -31,7 +31,7 @@ matrix:
     - os: linux
       go: 1.9.x
       addons:
-	apt:
+        apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
@@ -41,7 +41,7 @@ matrix:
     - os: linux
       go: master
       addons:
-	apt:
+        apt:
           sources:
             - ubuntu-toolchain-r-test
           packages:
@@ -64,8 +64,8 @@ matrix:
       osx_image: xcode6.4
       go: master
       env:
-	- SKIP_GRAPHVIZ=1
-	- MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
+        - SKIP_GRAPHVIZ=1
+        - MATRIX_EVAL="brew install gcc48 && CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
       osx_image: xcode7.3
       go: 1.8.x
