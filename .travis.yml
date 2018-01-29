@@ -16,6 +16,11 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
+            - libelf-dev
+            - libssl-dev
+            - libcap-dev
+            - linux-tools-`uname -r`
+            - linux-cloud-tools-`uname -r`
       env:
          - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
@@ -26,6 +31,11 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
+            - libelf-dev
+            - libssl-dev
+            - libcap-dev
+            - linux-tools-`uname -r`
+            - linux-cloud-tools-`uname -r`
       env:
          - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
@@ -36,6 +46,11 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
+            - libelf-dev
+            - libssl-dev
+            - libcap-dev
+            - linux-tools-`uname -r`
+            - linux-cloud-tools-`uname -r`
       env:
          - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: linux
@@ -46,6 +61,11 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.8
+            - libelf-dev
+            - libssl-dev
+            - libcap-dev
+            - linux-tools-`uname -r`
+            - linux-cloud-tools-`uname -r`
       env:
          - MATRIX_EVAL="CC=gcc-4.8 && CXX=g++-4.8"
     - os: osx
@@ -99,15 +119,8 @@ matrix:
 
 addons:
   apt:
-    sources:
-      - ppa:ubuntu-toolchain-r/test -y
     packages:
       - graphviz
-      - libelf-dev
-      - libssl-dev
-      - libcap-dev
-      - linux-tools-`uname -r`
-      - linux-cloud-tools-`uname -r`
 
 before_install:
   - go get -u github.com/golang/lint/golint honnef.co/go/tools/cmd/... github.com/ianlancetaylor/demangle
